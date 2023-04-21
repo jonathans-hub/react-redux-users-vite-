@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row , Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import User from "./User";
 
 export default function Users(props) {
@@ -20,3 +20,4 @@ export default function Users(props) {
     </Container>
   );
 }
+

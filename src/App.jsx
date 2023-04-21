@@ -1,64 +1,37 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container, Row } from "react-bootstrap";
 import AddUserForm from "./components/AddUserForm.jsx";
 import Users from "./components/Users";
+import { addUser, removeUser, editUser } from "./actions/userActions.jsx";
 
+export function App() {
+  const users = useSelector((state) => state.users);
+  const dispatch = useDispatch();
 
-function App() {
-  const [state, setState] = useState({
-    users: [
-      {
-        name: "Uta James",
-        email: "utajam@aol.com",
-        gen: "20",
-        id: "dfsdjkvnsdjkfnskf",
-      },
-      {
-        name: "Chris Alton",
-        email: "chrisal@aol.com",
-        gen: "18",
-        id: "45fsdsjkvnsdjkfnskf",
-      },
-      {
-        name: "Berus Sama",
-        email: "berus@aol.com",
-        gen: "22",
-        id: "weonbfjkvnwvnsdjkfnskf",
-      },
-    ],
-  });
-
- const addNewUSer = (user) => {
-    user.id = Math.random().toString();
-    setState({
-      users: [...state.users, user],
-    });
+  const addNewUSer = (user) => {
+    dispatch(addUser(user))
   };
- const removeUser = (id) => {
-    let undeletedusers = state.users.filter((user) => user.id !== id);
-    setState({
-      users: undeletedusers,
-    });
+  const removeUSer = (id) => {
+    dispatch(removeUser(id))
   };
-  const editUser = (id, updatedUser) => {
-    setState({
-      users: state.users.map((user) => (user.id === id ? updatedUser : user)),
-    });
+  const editUSer = (id, updatedUser) => {
+    dispatch(editUser(id, updatedUser))
   };
 
   return (
     <div>
       <Container style={{ marginTop: "2rem" }}>
         <Row>
-          <Col md="5" className='mb-2'>
+          <Col md="5" className="mb-2">
             <AddUserForm addUser={addNewUSer} />
           </Col>
-          <Col md='7'>
+          <Col md="7">
             <Users
-              userData={state.users}
-              removeUser={removeUser}
-              editUser={editUser}
+              userData={users}
+              removeUser={removeUSer}
+              editUser={editUSer}
             />
           </Col>
         </Row>
